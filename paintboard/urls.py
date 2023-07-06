@@ -19,8 +19,10 @@ from index import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('paintboard/board/',views.getboard),
-    path('paintboard/paint/',views.paintboard),
-    path('paintboard/paint',views.paintboard),
-    path('',views.index),
+    path('paintboard/board/', views.getboard),
+    path('paintboard/paint/', views.paintboard),
+    path('paintboard/paint', views.paintboard),
+    path('paintboard/gettoken', views.gettk),
+    path('paintboard/gettoken/', views.gettk),
+    path('', views.index),
 ]
