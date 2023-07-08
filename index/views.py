@@ -66,8 +66,8 @@ def paintboard(request):
                 mapppy.write("mapp = "+str(mapp))
             print(request.POST['uid'] + " paint " +
                   request.POST['color'] + " at " + request.POST['x'] + " " + request.POST['y'])
-            return HttpResponse("done")
-        return HttpResponse("Token Error", status=400)
+            return HttpResponse("{\"status\":200,\"data\":\"done\"}")
+        return HttpResponse("{\"status\":400,\"data\":\"Token Error\"}")
 
         # return HttpResponse(request.POST['uid'] + " paint " + request.POST['color'] + " at " + request.POST['x'] + " " + request.POST['y'])
     else:

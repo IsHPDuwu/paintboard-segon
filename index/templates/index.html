@@ -183,7 +183,7 @@
             //alert(event.offsetY);
             if (document.getElementById('uid').value == null || document.getElementById('token').value == null || document.getElementById('token').value == "") return;
 
-            if (new Date() < (lasttime + timelimit) * 1000) {
+            if (new Date() < (lasttime + timelimit) * 1000 && 0) {
                 alert("冷却时间未到，暂时不能涂色");
                 return;
             }
@@ -200,9 +200,10 @@
                 color: nowColor.slice(1, 7),
                 uid: document.getElementById('uid').value.toString(),
                 token: document.getElementById('token').value
-            }, function (resp) {
+            }, function (respa) {
+                resp = jQuery.parseJSON(respa)
                 if (resp.status !== 200) {
-                    //alert(resp.data)
+                    alert(resp.data)
                 } else {
                     lasttime = (new Date()) / 1000;
                     getCountDown(lasttime + timelimit);
@@ -213,11 +214,15 @@
             $.post("/paintboard/gettoken", {
                 uid: document.getElementById('uid').value.toString(),
                 paste: document.getElementById('paste').value
-            }, function (resp) {
-                document.getElementById('token').value = resp;
-                localStorage.setItem('token', resp)
-                localStorage.setItem('uid', document.getElementById('uid').value.toString())
-
+            }, function (respa) {
+                resp = jQuery.parseJSON(resp)
+                if (resp.status !== 200) {
+                    alert(resp.data)
+                } else {
+                    document.getElementById('token').value = resp.data;
+                    localStorage.setItem('token', resp.data)
+                    localStorage.setItem('uid', document.getElementById('uid').value.toString())
+                }
             });
         });
         $('#mycanvas').draggable({
@@ -349,7 +354,7 @@
             };
         }
 
-        //connectWs();
+        connectWs();
 
         (function () {
             $('#activity-time-start').html(getDateTime(activityStartTime, false));
@@ -372,10 +377,6 @@
             document.getElementById('token').value = localStorage.getItem('token');
             document.getElementById('uid').value = localStorage.getItem('uid');
         })();
-        //for(;;)
-        //{
-        setTimeout("initialPaint()", 1000)
-    //}
     </script>
 </body>
 
